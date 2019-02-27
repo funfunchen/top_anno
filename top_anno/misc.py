@@ -2,10 +2,11 @@ import dask.dataframe as dd
 from dask.diagnostics import ProgressBar
 import numpy as np
 import pandas as pd
+import os
 
 class Anno_file():
     def __init__(self, ref_path, chrom, anno_type):
-        self._ref_file = ref_path + "/" + "freeze.6.chr" + chrom + "." + anno_type + ".general"
+        self._ref_file = os.path.join(ref_path, "freeze.6.chr{}.{}.general".format(chrom, anno_type))
         self.anno_col_names = pd.read_csv(self._ref_file, sep="\t", nrows=1).columns.tolist()
         self.dtype_tuples = [(x, str) for x in anno_col_names]
         self.dtypes = dict(dtype_tuples)
@@ -27,6 +28,14 @@ class Res_file():
     def dd_df():
         df = dd.read_csv(self._res,  sep="\t", names=self.col_names, dtype=self._d_types)
         return df
+
+
+class Out_file():
+    def __init__(self, out_path, anno_type, chrom, prefix=top_anno)
+        self._ref_file = os.path.join(out_path, "{}.chr{}.{}.freeze.6.anno*.csv".format(prefix, chrom, anno_type))
+
+    def out_path()
+        return self._ref_file
 
 
 class simple_logger(object):
